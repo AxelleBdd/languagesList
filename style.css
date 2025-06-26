@@ -1,0 +1,28 @@
+/* Font */
+.victor-mono-regular {
+  font-family: "Victor Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+    font-family: "Victor Mono", monospace;
+}
+
+h1 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+button {
+    border-radius: 1rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    border: none;
+    padding: 0.5rem;
+}
+
+.languageDiv {
+
+}

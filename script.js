@@ -78,8 +78,9 @@ async function modifyLanguage(name, userInput) {
 function createLanguageDiv(languageArray, container) {
     container.innerHTML = "";
     languageArray.forEach(language => {
-        const languageDiv = document.createElement('p');
+        const languageDiv = document.createElement('div');
         languageDiv.innerHTML = `· ${language}`;
+        languageDiv.className = "languageDiv"
         
         const modifyLanguageButton = document.createElement('button');
         modifyLanguageButton.innerText = "Modify";
