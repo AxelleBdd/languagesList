@@ -14,7 +14,7 @@ app.get("/languages", (req, res) => {
 
 app.post("/languages", (req, res) => {
   database.push(req.body.language);
-  res.status(201).json({ language: req.body.language });
+  res.json(database);
 });
 
 app.put("/languages/:name", (req, res) => {
@@ -23,7 +23,7 @@ app.put("/languages/:name", (req, res) => {
     const index = database.indexOf(oldName);
 
     database[index] = newName;
-    res.json({ old: oldName, new: newName });
+    res.json(database);
 });
 
 app.delete("/languages", (req, res) => {
@@ -31,7 +31,7 @@ app.delete("/languages", (req, res) => {
     const index = database.indexOf(langageToDelete);
 
     database.splice(index, 1);
-    res.json({ languageDeleted: langageToDelete})
+    res.json(database)
 })
 
 app.listen(port, () => {
