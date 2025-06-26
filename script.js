@@ -1,6 +1,6 @@
-const container = document.querySelector('#languagesDisplay')
-const addButton = document.querySelector('#addLanguageButton')
-const inputAdd = document.querySelector('#addLanguage')
+const container = document.querySelector('#languagesDisplay');
+const addButton = document.querySelector('#addLanguageButton');
+const inputAdd = document.querySelector('#addLanguage');
 
 async function displayLanguages() {
     const response = await fetch('http://localhost:8000/languages');
@@ -21,7 +21,6 @@ async function postLanguage() {
             method: "POST",
             headers: {
                     "Content-Type": "application/json",
-    
                 },
             body: JSON.stringify(input)
         });
@@ -34,27 +33,80 @@ async function postLanguage() {
     }
 }
 
+async function deleteLanguage(name) {
+    try {
+        const response = await fetch(`http://localhost:8000/languages`, {
+            method: "DELETE",
+            headers: {
+                    "Content-Type": "application/json",
+                },
+            body: JSON.stringify({ language: name })
+        });
+        if (response.ok){
+            alert("Language deleted")
+            await displayLanguages();
+        } else {
+            alert("An error has occurred")
+        }
+
+    } catch (error) {
+        console.error(error.message); 
+    }
+}
+
+async function modifyLanguage(name) {
+    try {
+        const response = await fetch(`http://localhost:8000/languages/${name}`, {
+            method: "PUT",
+            headers: {
+                    "Content-Type": "application/json",
+                },
+            body: JSON.stringify({ language: name })
+        });
+        if (response.ok){
+            alert("Language modified")
+            await displayLanguages();
+        } else {
+            alert("An error has occurred")
+        }
+
+    } catch (error) {
+        console.error(error.message); 
+    }
+}
+
 function createLanguageDiv(languageArray, container) {
+    container.innerHTML = "";
     languageArray.forEach(language => {
         const languageDiv = document.createElement('p');
         languageDiv.innerHTML = `· ${language}`;
-
-        const modifyLanguage = document.createElement('button');
-        modifyLanguage.innerText = "Modify";
-
-        const deleteLanguage = document.createElement('button');
-        deleteLanguage.innerText = "Delete";
-
+        
+        const modifyLanguageButton = document.createElement('button');
+        modifyLanguageButton.innerText = "Modify";
+        modifyLanguageButton.className = "modifyButton";
+        
+        const deleteLanguageButton = document.createElement('button');
+        deleteLanguageButton.innerText = "Delete";
+        deleteLanguageButton.className = "deleteButton";
+        
+        deleteLanguageButton.addEventListener("click", () => {
+            deleteLanguage(language);
+        })
+        
+        modifyLanguageButton.addEventListener("click", () => {
+            modifyLanguage(language);
+        })
 
         container.appendChild(languageDiv);
-        languageDiv.appendChild(modifyLanguage);
-        languageDiv.appendChild(deleteLanguage);
+        languageDiv.appendChild(modifyLanguageButton);
+        languageDiv.appendChild(deleteLanguageButton);
     });
 }
 
-addButton.addEventListener("click", function () {
+addButton.addEventListener("click", () => {
     event.preventDefault(); //Eviter le rechargement du navigateur au submit du form
     postLanguage();
 })
+
 
 displayLanguages()
