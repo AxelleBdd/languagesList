@@ -54,14 +54,14 @@ async function deleteLanguage(name) {
     }
 }
 
-async function modifyLanguage(name) {
+async function modifyLanguage(name, userInput) {
     try {
         const response = await fetch(`http://localhost:8000/languages/${name}`, {
             method: "PUT",
             headers: {
                     "Content-Type": "application/json",
                 },
-            body: JSON.stringify({ language: name })
+            body: JSON.stringify({ language: userInput })
         });
         if (response.ok){
             alert("Language modified")
@@ -94,7 +94,8 @@ function createLanguageDiv(languageArray, container) {
         })
         
         modifyLanguageButton.addEventListener("click", () => {
-            modifyLanguage(language);
+            let updatelanguage = prompt("Enter the new language name: ")
+            modifyLanguage(language, updatelanguage);
         })
 
         container.appendChild(languageDiv);
@@ -106,6 +107,7 @@ function createLanguageDiv(languageArray, container) {
 addButton.addEventListener("click", () => {
     event.preventDefault(); //Eviter le rechargement du navigateur au submit du form
     postLanguage();
+    inputAdd.value = "";
 })
 
 
